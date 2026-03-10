@@ -20,8 +20,8 @@ Hybrid Storage: Combines local Dockerized MinIO for raw files with ChromaDB Clou
 ## 1. Clone the Repository
 
 ```
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/SaifiNaved/RAG
+cd RAG
 ```
 
 ## 2. Configure Environment Variables
