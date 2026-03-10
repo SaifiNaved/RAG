@@ -1,0 +1,25 @@
+
+
+
+version: '3.8'
+
+services:
+  minio:
+    image: minio/minio:latest
+    container_name: minio_server
+    ports:
+      - "9000:9000"   # API port
+      - "9010:9010"   # Console UI port
+    volumes:
+      - ./minio_data:/data
+    command: server --console-address ":9010" /data
+    env_file: .env
+    restart: always
+
+
+#  redis: 
+#    container_name: redis
+#    image: redis:6.2.21-alpine
+#    ports:
+#      - "6379:6379"
+
