@@ -1,6 +1,9 @@
 
 .env
 
-minio_data/rag-documents
+minio_data/rag-documents/*
 play.py
 play2.py
+play.txt
+PAPERS.pdf
+src/documentStaging/*

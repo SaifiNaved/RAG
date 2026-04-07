@@ -55,4 +55,4 @@ class ResponseRegisterUser(BaseModel):
     email : EmailStr 
     username : str 
     created_at : str
-    profile_url :str
+    #profile_url :str

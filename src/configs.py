@@ -13,8 +13,9 @@ class Chroma_Settings():
 chroma_settings = Chroma_Settings()
 
 class LLM_Settings() : 
-    llm_api_key: str = os.getenv("LLM_API_KEY")
+    llm_api_key: str = os.getenv("GOOGLE_API_KEY")
     embedding_model = os.getenv("EMBEDDING_MODEL")
+    generation_model = os.getenv("GENERATION_MODEL")
 llm_settings = LLM_Settings()
 
 class Background_Task_Settings(): 

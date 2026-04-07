@@ -6,17 +6,18 @@ from src.accounts.routes import user_router
 from fastapi.responses import JSONResponse
 from src.document.routes import doc_routes
 from src.document.doc_services import ensure_bucket_and_policy
-from src.chroma_db import get_chroma_client
-
+from src.chroma_db import get_chroma_client, get_collection
+from src.query.routes import query_routes
 app = FastAPI()
 app.include_router(user_router)
 app.include_router(doc_routes)
-
+app.include_router(query_routes)
 
 @app.on_event("startup")
 async def on_startup() :
     await init_db()
     ensure_bucket_and_policy()
+    await get_collection()
     #app.state.chroma_client =await get_chroma_client()
 
 

@@ -20,7 +20,6 @@ ALLOWED_TYPES = { "application/pdf", "application/vnd.openxmlformats-officedocum
 async def upload_file(
     request : Request,
     file : UploadFile = File(...),
-    chroma_client = Depends(get_chroma_client),
     document_services : DocumentServices= Depends(DocumentServices) ,
     current_user : Users = Depends(UserService.get_current_user) ,
     db : AsyncSession = Depends(get_session)  ) :
@@ -29,7 +28,9 @@ async def upload_file(
             #result = await document_services.create_metadata(file , result , current_user , db=db)
             file_path = document_services.get_document(result.bucket_name , result.object_name)
             result = await document_services.create_metadata(file , result , current_user , db=db)
-            await process_doc(file_path , str(current_user.id), str(result.document_name), chroma_client)
+            print (result.document_name)
+            print (result.id)
+            await process_doc(file_path , str(current_user.id), str(result.id))
             return result
         except Exception as e : 
               raise InternelServerError("Fail to process document")

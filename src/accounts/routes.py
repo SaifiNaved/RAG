@@ -13,8 +13,8 @@ async def user_register(user : Register_User , session :AsyncSession = Depends(g
     resp = ResponseRegisterUser(
         email = new_user.email ,
         username=new_user.username ,
-        created_at= new_user.created_at ,
-        profile_url = new_user.profile_photo_url)
+        created_at= new_user.created_at)
+        #profile_url = new_user.profile_photo_url)
     return resp
 
 

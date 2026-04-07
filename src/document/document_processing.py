@@ -3,11 +3,12 @@
 from langchain_community.document_loaders import PDFPlumberLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
-import os 
+import os, uuid 
 from dotenv import load_dotenv
-from src.chroma_db import get_chroma_client
+from src.chroma_db import get_chroma_client, get_collection, create_collection_schema
 from chromadb.utils.embedding_functions import GoogleGenaiEmbeddingFunction
 from src.configs import llm_settings , chroma_settings
+
 
 load_dotenv()
 
@@ -25,6 +26,7 @@ def chunk_document(documents: list[Document]) :
     chunks = splitter.split_documents(documents=documents) 
     return chunks
 
+"""
 async def get_collection (chroma_client) : 
     try : 
         collection = None
@@ -38,18 +40,18 @@ async def get_collection (chroma_client) :
         return collection
     except Exception as e : 
         raise RuntimeError(f"Failed to get collection ")
-    
+"""    
 
 async def add_embeddings(documents : list[Document] , collection, user_id: str , document_id: str) : 
         try:
             docs = []
             docs_id = []
-            page_no = 1
+            #page_no = 1
             for item in documents : 
                 docs.append(item.page_content)
-                docs_id.append(f"{document_id}_{page_no}")
-                page_no+=1
-                print(page_no)
+                docs_id.append(str(uuid.uuid4()))
+                #page_no+=1
+                #print(page_no)
             await collection.add(
                     ids= docs_id, 
                     documents=docs,
@@ -59,11 +61,8 @@ async def add_embeddings(documents : list[Document] , collection, user_id: str ,
             raise RuntimeError (f"Failed to store embeddings ")
 
 
-async def process_doc(file_path: str , user_id: str, document_id: str , chroma_client ) : 
+async def process_doc(file_path: str , user_id: str, document_id: str) : 
         loaded_document = load_document(file_path)
-        print(loaded_document[0].page_content)
         chunked_document = chunk_document(loaded_document)
-        #(f"************Chunk length {len(chunk_document)}****************")
-        #chroma_client =await get_chroma_client()
-        coll = await get_collection(chroma_client)
+        coll = await get_collection()
         await add_embeddings(chunked_document , coll , user_id=user_id , document_id=document_id)
