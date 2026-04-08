@@ -28,11 +28,11 @@ async def upload_file(
             #result = await document_services.create_metadata(file , result , current_user , db=db)
             file_path = document_services.get_document(result.bucket_name , result.object_name)
             result = await document_services.create_metadata(file , result , current_user , db=db)
-            print (result.document_name)
-            print (result.id)
             await process_doc(file_path , str(current_user.id), str(result.id))
+            await db.commit()
             return result
         except Exception as e : 
+              db.rollback()
               raise InternelServerError("Fail to process document")
         
         

@@ -55,7 +55,7 @@ class DocumentServices () :
             user_id = user.id
         )
         db.add(doc_metadata)
-        await db.commit()
+        await db.flush()
         await db.refresh(doc_metadata)
         return doc_metadata
 
@@ -91,7 +91,7 @@ class DocumentServices () :
         os.makedirs(STAGING_DIR, exist_ok=True)
         file_path = os.path.join(STAGING_DIR , object_name)
         try :
-            minio.fget_object(bucket_name , object_name , file_path) 
+            minio.fget_object(bucket_name , object_name , file_path) # Downloading the object to local staging directory
             return file_path
         except Exception as e : 
             raise InternelServerError("Fail to process the document, unable to download from object storage")
