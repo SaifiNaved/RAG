@@ -14,6 +14,8 @@ Secure User Management: Full registration and login flow secured by JWT tokens a
 Automated Ingestion: A "Fetch-and-Process" workflow that automatically triggers document processing upon upload.
 Smart Chunking: Utilizes LangChain for intelligent text splitting and Google Gemini for high-dimensional vector embeddings.
 Hybrid Storage: Combines local Dockerized MinIO for raw files with ChromaDB Cloud for searchable embeddings and Postgre for user & metadata.
+Hybrid retrieval: Implemented hybrid retrieval to retrieve context for maximum accuracy.
+Response Generation: Used Gemini 2.5-flash model to generate response from context. 
 
 # ⚙️ Setup & Installation
 
